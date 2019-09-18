@@ -1,3 +1,7 @@
+# docker-airflow repo, extended with odbd-driver installation
+This repo is based on the puckel/docker-airflow repo.
+In the dockerfile, the ODBC-drivers are installed. This installation is not done in the original puckel/docker-airflow repo.
+
 # docker-airflow
 [![CircleCI](https://circleci.com/gh/puckel/docker-airflow/tree/master.svg?style=svg)](https://circleci.com/gh/puckel/docker-airflow/tree/master)
 [![Docker Build Status](https://img.shields.io/docker/build/puckel/docker-airflow.svg)]()
