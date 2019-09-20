@@ -77,7 +77,7 @@ RUN apt-get install gcc unixodbc-dev gnupg2 apt-transport-https curl -y \
         && curl https://packages.microsoft.com/keys/microsoft.asc | apt-key add - \
         && curl https://packages.microsoft.com/config/debian/9/prod.list > /etc/apt/sources.list.d/mssql-release.list
 RUN apt-get update
-RUN ACCEPT_EULA=Y apt-get install msodbcsql17 -y
+RUN ACCEPT_EULA=Y apt-get install msodbcsql13 -y
 RUN ACCEPT_EULA=Y apt-get install mssql-tools -y
 RUN echo 'export PATH="$PATH:/opt/mssql-tools/bin"' >> ~/.bashrc
 
