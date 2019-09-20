@@ -70,6 +70,7 @@ RUN set -ex \
         /usr/share/doc \
         /usr/share/doc-base
 
+#################################################################################
 ## Install ODBC drivers
 #RUN apt-get install --reinstall build-essential -y
 #RUN apt-get update
@@ -81,13 +82,23 @@ RUN set -ex \
 #RUN ACCEPT_EULA=Y apt-get install mssql-tools -y
 #RUN echo 'export PATH="$PATH:/opt/mssql-tools/bin"' >> ~/.bashrc
 
-## Install ODBC drivers V2
+
+# --- Install pyodbc on Derbian Stretch 9
+# https://github.com/mkleehammer/pyodbc/wiki/Install
+RUN apt-get update \
+# && apt-get install g++ \
+&& apt-get install --yes unixodbc-dev \
+&& pip install pyodbc==4.0.27
+# --- Install Microsoft ODBC Driver
+# https://docs.microsoft.com/en-us/sql/connect/odbc/linux-mac/installing-the-microsoft-odbc-driver-for-sql-server?view=sql-server-2017
 RUN curl https://packages.microsoft.com/keys/microsoft.asc | apt-key add -
-RUN curl https://packages.microsoft.com/config/ubuntu/18.04/prod.list > /etc/apt/sources.list.d/mssql-release.list
-RUN apt-get update -y
-RUN ACCEPT_EULA=Y apt-get install -y msodbcsql17 unixodbc-dev mssql-tools
+RUN curl https://packages.microsoft.com/config/debian/9/prod.list > /etc/apt/sources.list.d/mssql-release.list
+# Need some certificate fix to install msodbcsql17
+RUN apt-get install --yes apt-transport-https ca-certificates \
+&& apt-get update && ACCEPT_EULA=Y apt-get install --yes msodbcsql17
 
 
+#################################################################################
 COPY script/entrypoint.sh /entrypoint.sh
 COPY config/airflow.cfg ${AIRFLOW_USER_HOME}/airflow.cfg
 
