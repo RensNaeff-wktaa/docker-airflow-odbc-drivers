@@ -81,6 +81,13 @@ RUN ACCEPT_EULA=Y apt-get install msodbcsql17 -y
 RUN ACCEPT_EULA=Y apt-get install mssql-tools -y
 RUN echo 'export PATH="$PATH:/opt/mssql-tools/bin"' >> ~/.bashrc
 
+ADD odbcinst.ini /etc/odbcinst.ini
+RUN apt-get update
+RUN apt-get install -y tdsodbc unixodbc-dev
+RUN apt install unixodbc-bin -y
+RUN apt-get clean -y
+
+
 COPY script/entrypoint.sh /entrypoint.sh
 COPY config/airflow.cfg ${AIRFLOW_USER_HOME}/airflow.cfg
 
