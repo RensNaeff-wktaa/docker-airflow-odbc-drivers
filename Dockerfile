@@ -71,29 +71,19 @@ RUN set -ex \
         /usr/share/doc-base
 
 ## Install ODBC drivers
-RUN apt-get update \
-        && apt-get install -y curl apt-transport-https gnupg2 \
-        && curl https://packages.microsoft.com/keys/microsoft.asc | apt-key add - \
-        && curl https://packages.microsoft.com/config/debian/9/prod.list > /etc/apt/sources.list.d/mssql-release.list \
-        && apt-get update \
-        && ACCEPT_EULA=Y apt-get install -y msodbcsql17 mssql-tools
+RUN apt-get install --reinstall build-essential -y
+RUN apt-get update
+RUN apt-get install gcc unixodbc-dev gnupg2 apt-transport-https curl -y \
+  && curl https://packages.microsoft.com/keys/microsoft.asc | apt-key add - \
+  && curl https://packages.microsoft.com/config/debian/9/prod.list > /etc/apt/sources.list.d/mssql-release.list 
+RUN apt-get update
+RUN ACCEPT_EULA=Y apt-get install msodbcsql17 -y
+RUN ACCEPT_EULA=Y apt-get install mssql-tools -y
+RUN echo 'export PATH="$PATH:/opt/mssql-tools/bin"' >> ~/.bashrc
 
-## Install ODBC drivers
-#RUN apt-get install --reinstall build-essential -y
-#RUN apt-get update
-#RUN apt-get install gcc unixodbc-dev gnupg2 apt-transport-https curl -y \
-#        && curl https://packages.microsoft.com/keys/microsoft.asc | apt-key add - \
-#        && curl https://packages.microsoft.com/config/debian/9/prod.list > /etc/apt/sources.list.d/mssql-release.list
-#RUN apt-get update
-#RUN ACCEPT_EULA=Y apt-get install msodbcsql17 -y
-#RUN ACCEPT_EULA=Y apt-get install mssql-tools -y
-#RUN echo 'export PATH="$PATH:/opt/mssql-tools/bin"' >> ~/.bashrc
-
-#ADD odbcinst.ini /etc/odbcinst.ini
-#RUN apt-get update
-#RUN apt-get install -y tdsodbc unixodbc-dev
-#RUN apt install unixodbc-bin -y
-#RUN apt-get clean -y
+RUN  pip install 'apache-airflow[mssql]' \
+                 'pyodbc' \
+                 'pymssql'
 
 
 COPY script/entrypoint.sh /entrypoint.sh
