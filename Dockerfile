@@ -11,9 +11,7 @@ LABEL maintainer="Puckel_"
 ENV DEBIAN_FRONTEND noninteractive
 ENV TERM linux
 
-# Set the locale
-RUN sed -i -e 's/# en_US.UTF-8 UTF-8/en_US.UTF-8 UTF-8/' /etc/locale.gen && \
-    locale-gen
+# Set the locale utf-8
 ENV LANG en_US.UTF-8  
 ENV LANGUAGE en_US:en  
 ENV LC_ALL en_US.UTF-8 
