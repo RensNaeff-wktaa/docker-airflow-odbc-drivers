@@ -80,8 +80,7 @@ RUN apt-get update
 RUN ACCEPT_EULA=Y apt-get install msodbcsql17 -y
 RUN ACCEPT_EULA=Y apt-get install mssql-tools -y
 RUN echo 'export PATH="$PATH:/opt/mssql-tools/bin"' >> ~/.bashrc 
-#\
-#  && source ~/.bashrc
+RUN /bin/bash -c "source ~/.bashrc"
 
 RUN  pip install 'apache-airflow[mssql]' \
                  'pyodbc' \
