@@ -83,16 +83,16 @@ RUN echo 'export PATH="$PATH:/opt/mssql-tools/bin"' >> ~/.bashrc
 #\
 #  && source ~/.bashrc
 
+RUN  pip install 'apache-airflow[mssql]' \
+                 'pyodbc' \
+                 'pymssql'
+
 ADD odbcinst.ini /etc/odbcinst.ini
 RUN apt-get update
 RUN apt-get install -y tdsodbc unixodbc-dev
 RUN apt install unixodbc-bin -y
 RUN apt-get clean -y
-
-RUN  pip install 'apache-airflow[mssql]' \
-                 'pyodbc' \
-                 'pymssql'
-                 
+              
 ## Install ODBC driver 13
 #RUN apt-get install --reinstall build-essential -y
 #RUN apt-get update
