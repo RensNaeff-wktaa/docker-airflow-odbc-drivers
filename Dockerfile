@@ -11,6 +11,11 @@ LABEL maintainer="Puckel_"
 ENV DEBIAN_FRONTEND noninteractive
 ENV TERM linux
 
+RUN locale-gen en_US.UTF-8  
+ENV LANG en_US.UTF-8  
+ENV LANGUAGE en_US:en  
+ENV LC_ALL en_US.UTF-8  
+
 # Airflow
 ARG AIRFLOW_VERSION=1.10.4
 ARG AIRFLOW_USER_HOME=/usr/local/airflow
@@ -71,41 +76,41 @@ RUN set -ex \
         /usr/share/doc-base
 
 ## Install ODBC driver 17
-#RUN apt-get install --reinstall build-essential -y
-#RUN apt-get update
-#RUN apt-get install gcc unixodbc-dev gnupg2 apt-transport-https curl -y \
-#  && curl https://packages.microsoft.com/keys/microsoft.asc | apt-key add - \
-#  && curl https://packages.microsoft.com/config/debian/9/prod.list > /etc/apt/sources.list.d/mssql-release.list 
-#RUN apt-get update
-#RUN ACCEPT_EULA=Y apt-get install msodbcsql17 -y
-#RUN ACCEPT_EULA=Y apt-get install mssql-tools -y
-#RUN echo 'export PATH="$PATH:/opt/mssql-tools/bin"' >> ~/.bashrc
-
-#RUN  pip install 'apache-airflow[mssql]' \
-#                 'pyodbc' \
-#                 'pymssql'
-                 
-## Install ODBC driver 13
 RUN apt-get install --reinstall build-essential -y
 RUN apt-get update
 RUN apt-get install gcc unixodbc-dev gnupg2 apt-transport-https curl -y \
   && curl https://packages.microsoft.com/keys/microsoft.asc | apt-key add - \
-  && curl https://packages.microsoft.com/config/debian/9/prod.list > /etc/apt/sources.list.d/mssql-release.list
+  && curl https://packages.microsoft.com/config/debian/9/prod.list > /etc/apt/sources.list.d/mssql-release.list 
 RUN apt-get update
-RUN ACCEPT_EULA=Y apt-get install msodbcsql -y
+RUN ACCEPT_EULA=Y apt-get install msodbcsql17 -y
 RUN ACCEPT_EULA=Y apt-get install mssql-tools -y
 RUN echo 'export PATH="$PATH:/opt/mssql-tools/bin"' >> ~/.bashrc
-RUN apt-get install unixodbc-dev -y
-
-RUN apt search wget
-RUN apt-get install wget -y
-RUN su
-RUN wget https://gallery.technet.microsoft.com/ODBC-Driver-13-for-Ubuntu-b87369f0/file/154097/2/installodbc.sh 
-RUN sh installodbc.sh
 
 RUN  pip install 'apache-airflow[mssql]' \
                  'pyodbc' \
                  'pymssql'
+                 
+## Install ODBC driver 13
+#RUN apt-get install --reinstall build-essential -y
+#RUN apt-get update
+#RUN apt-get install gcc unixodbc-dev gnupg2 apt-transport-https curl -y \
+#  && curl https://packages.microsoft.com/keys/microsoft.asc | apt-key add - \
+#  && curl https://packages.microsoft.com/config/debian/9/prod.list > /etc/apt/sources.list.d/mssql-release.list
+#RUN apt-get update
+#RUN ACCEPT_EULA=Y apt-get install msodbcsql -y
+#RUN ACCEPT_EULA=Y apt-get install mssql-tools -y
+#RUN echo 'export PATH="$PATH:/opt/mssql-tools/bin"' >> ~/.bashrc
+#RUN apt-get install unixodbc-dev -y
+
+#RUN apt search wget
+#RUN apt-get install wget -y
+#RUN su
+#RUN wget https://gallery.technet.microsoft.com/ODBC-Driver-13-for-Ubuntu-b87369f0/file/154097/2/installodbc.sh 
+#RUN sh installodbc.sh
+
+#RUN  pip install 'apache-airflow[mssql]' \
+#                 'pyodbc' \
+#                 'pymssql'
                                 
 COPY script/entrypoint.sh /entrypoint.sh
 COPY config/airflow.cfg ${AIRFLOW_USER_HOME}/airflow.cfg
