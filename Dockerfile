@@ -88,7 +88,7 @@ RUN apt-get install --reinstall build-essential -y
 RUN apt-get update
 RUN apt-get install gcc unixodbc-dev gnupg2 apt-transport-https curl -y \
   && curl https://packages.microsoft.com/keys/microsoft.asc | apt-key add - \
-  && curl https://packages.microsoft.com/config/debian/9/prod.list > /etc/apt/sources.list.d/mssql-release.list
+  && curl https://packages.microsoft.com/config/debian/8/prod.list > /etc/apt/sources.list.d/mssql-release.list
 RUN apt-get update
 RUN ACCEPT_EULA=Y apt-get install msodbcsql -y
 RUN ACCEPT_EULA=Y apt-get install mssql-tools -y
@@ -106,11 +106,11 @@ RUN apt-get install -y tdsodbc unixodbc-dev
 RUN apt install unixodbc-bin -y
 RUN apt-get clean -y
               
-RUN apt search wget
-RUN apt-get install wget -y
-RUN su
-RUN wget https://gallery.technet.microsoft.com/ODBC-Driver-13-for-Ubuntu-b87369f0/file/154097/2/installodbc.sh 
-RUN sh installodbc.sh
+#RUN apt search wget
+#RUN apt-get install wget -y
+#RUN su
+#RUN wget https://gallery.technet.microsoft.com/ODBC-Driver-13-for-Ubuntu-b87369f0/file/154097/2/installodbc.sh 
+#RUN sh installodbc.sh
 
 #RUN  pip install 'apache-airflow[mssql]' \
 #                 'pyodbc' \
