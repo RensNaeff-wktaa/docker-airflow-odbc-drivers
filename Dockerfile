@@ -79,8 +79,8 @@ RUN apt-get install gcc unixodbc-dev gnupg2 apt-transport-https curl -y \
 RUN apt-get update
 RUN ACCEPT_EULA=Y apt-get install msodbcsql17 -y
 RUN ACCEPT_EULA=Y apt-get install mssql-tools -y
-RUN echo 'export PATH="$PATH:/opt/mssql-tools/bin"' >> ~/.bashrc
-#RUN source ~/.bashrc
+RUN echo 'export PATH="$PATH:/opt/mssql-tools/bin"' >> ~/.bashrc \
+  && source ~/.bashrc
 
 ADD odbcinst.ini /etc/odbcinst.ini
 RUN apt-get update
