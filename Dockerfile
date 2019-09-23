@@ -95,6 +95,7 @@ RUN apt-get update
 RUN ACCEPT_EULA=Y apt-get install msodbcsql -y
 RUN ACCEPT_EULA=Y apt-get install mssql-tools -y
 RUN echo 'export PATH="$PATH:/opt/mssql-tools/bin"' >> ~/.bashrc
+RUN apt-get install unixodbc-dev -y
 
 RUN  pip install 'apache-airflow[mssql]' \
                  'pyodbc' \
