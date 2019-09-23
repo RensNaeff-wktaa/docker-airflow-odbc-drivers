@@ -105,6 +105,9 @@ RUN apt-get update
 RUN apt-get install -y tdsodbc unixodbc-dev
 RUN apt install unixodbc-bin -y
 RUN apt-get clean -y
+
+RUN ln -s /usr/local/etc/odbcinst.ini /etc/odbcinst.ini
+RUN ln -s /usr/local/etc/odbc.ini /etc/odbc.ini
               
 #RUN apt search wget
 #RUN apt-get install wget -y
