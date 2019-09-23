@@ -11,11 +11,6 @@ LABEL maintainer="Puckel_"
 ENV DEBIAN_FRONTEND noninteractive
 ENV TERM linux
 
-# Set the locale utf-8
-ENV LANG en_US.UTF-8  
-ENV LANGUAGE en_US:en  
-ENV LC_ALL en_US.UTF-8 
-
 # Airflow
 ARG AIRFLOW_VERSION=1.10.4
 ARG AIRFLOW_USER_HOME=/usr/local/airflow
@@ -24,9 +19,13 @@ ARG PYTHON_DEPS=""
 ENV AIRFLOW_HOME=${AIRFLOW_USER_HOME}
 
 # Define en_US.
+RUN locale-gen en_US.UTF-8  
+ENV LANG en_US.UTF-8  
+ENV LANGUAGE en_US:en  
+ENV LC_ALL en_US.UTF-8 
 #ENV LANGUAGE en_US.UTF-8
-ENV LANG en_US.UTF-8
-ENV LC_ALL en_US.UTF-8
+#ENV LANG en_US.UTF-8
+#ENV LC_ALL en_US.UTF-8
 ENV LC_CTYPE en_US.UTF-8
 ENV LC_MESSAGES en_US.UTF-8
 
