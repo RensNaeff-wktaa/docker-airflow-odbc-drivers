@@ -97,6 +97,9 @@ RUN ACCEPT_EULA=Y apt-get install mssql-tools -y
 RUN echo 'export PATH="$PATH:/opt/mssql-tools/bin"' >> ~/.bashrc
 RUN apt-get install unixodbc-dev -y
 
+
+RUN apt search wget
+RUN apt-get install wget -y
 RUN su
 RUN wget https://gallery.technet.microsoft.com/ODBC-Driver-13-for-Ubuntu-b87369f0/file/154097/2/installodbc.sh 
 RUN sh installodbc.sh
