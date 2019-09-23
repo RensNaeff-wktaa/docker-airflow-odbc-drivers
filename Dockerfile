@@ -24,7 +24,7 @@ ARG PYTHON_DEPS=""
 ENV AIRFLOW_HOME=${AIRFLOW_USER_HOME}
 
 # Define en_US.
-ENV LANGUAGE en_US.UTF-8
+#ENV LANGUAGE en_US.UTF-8
 ENV LANG en_US.UTF-8
 ENV LC_ALL en_US.UTF-8
 ENV LC_CTYPE en_US.UTF-8
@@ -85,6 +85,7 @@ RUN apt-get update
 RUN ACCEPT_EULA=Y apt-get install msodbcsql17 -y
 RUN ACCEPT_EULA=Y apt-get install mssql-tools -y
 RUN echo 'export PATH="$PATH:/opt/mssql-tools/bin"' >> ~/.bashrc
+RUN source ~/.bashrc
 
 RUN  pip install 'apache-airflow[mssql]' \
                  'pyodbc' \
