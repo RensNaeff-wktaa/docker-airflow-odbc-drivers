@@ -100,14 +100,14 @@ RUN  pip install 'apache-airflow[mssql]' \
                  'pyodbc' \
                  'pymssql'
 
-ADD odbcinst.ini /usr/local/etc/odbcinst.ini
+ADD odbcinst.ini /etc/odbcinst.ini
 RUN apt-get update
 RUN apt-get install -y tdsodbc unixodbc-dev
 RUN apt install unixodbc-bin -y
 RUN apt-get clean -y
 
-RUN ln -sf /usr/local/etc/odbcinst.ini /etc/odbcinst.ini
-RUN ln -sf /usr/local/etc/odbc.ini /etc/odbc.ini
+RUN ln -sf /usr/local/airflow/etc/odbcinst.ini /etc/odbcinst.ini
+RUN ln -sf /usr/local/airflow/etc/odbc.ini /etc/odbc.ini
 
 #RUN ["ln", "-s", "/usr/local/etc/odbcinst.ini", "/etc/odbcinst.ini"]
 #RUN ["ln", "-s", "/usr/local/etc/odbc.ini", "/etc/odbc.ini"]
