@@ -125,7 +125,7 @@ RUN set -ex \
 ###################
 # apt-get and system utilities
 RUN apt-get update && apt-get install -y \
-    curl apt-utils apt-transport-https debconf-utils gcc build-essential g++-5\
+    curl apt-utils apt-transport-https debconf-utils gcc build-essential gcc\
     && rm -rf /var/lib/apt/lists/*
 
 # adding custom MS repository
