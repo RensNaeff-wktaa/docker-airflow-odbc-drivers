@@ -93,9 +93,8 @@ RUN apt-get install gcc unixodbc-dev gnupg2 apt-transport-https curl -y \
   && curl https://packages.microsoft.com/config/debian/8/prod.list > /etc/apt/sources.list.d/mssql-release.list
 RUN apt-get update
 RUN ACCEPT_EULA=Y apt-get install msodbcsql -y
-#RUN ACCEPT_EULA=Y apt-get install msodbcsql17 -y
-#RUN ACCEPT_EULA=Y apt-get install mssql-tools -y
-#RUN echo 'export PATH="$PATH:/opt/mssql-tools/bin"' >> ~/.bashrc
+RUN ACCEPT_EULA=Y apt-get install mssql-tools -y
+RUN echo 'export PATH="$PATH:/opt/mssql-tools/bin"' >> ~/.bashrc
 
 RUN  pip install 'apache-airflow[mssql]' \
                  'pyodbc' \
