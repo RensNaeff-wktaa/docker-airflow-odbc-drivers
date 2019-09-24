@@ -89,8 +89,11 @@ RUN set -ex \
 #RUN ln -s /etc/odbcinst.ini /usr/local/airflow/etc/odbcinst.ini
 #RUN ln -s /etc/odbc.ini /usr/local/airflow/etc/odbc.ini
 
-COPY /etc/odbcinst.ini /usr/local/airflow/etc/odbcinst.ini
-COPY /etc/odbc.ini /usr/local/airflow/etc/odbc.ini
+#COPY /etc/odbcinst.ini /usr/local/airflow/etc/odbcinst.ini
+#COPY /etc/odbc.ini /usr/local/airflow/etc/odbc.ini
+
+COPY /opt/microsoft/msodbcsql/lib64/libmsodbcsql-13.1.so.9.2 /usr/local/lib/libmsodbcsql-13.1.so.9.2
+COPY /opt/microsoft/msodbcsql/lib64/libmsodbcsql-17.4.so.1.1 /usr/local/lib/libmsodbcsql-17.4.so.1.1
 
 # ## Install ODBC driver 17
 # RUN apt-get install --reinstall build-essential -y
