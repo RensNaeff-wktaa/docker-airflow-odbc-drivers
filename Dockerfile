@@ -15,7 +15,6 @@ RUN apt-get update \
         && apt-get update \
         && ACCEPT_EULA=Y apt-get install -y msodbcsql17 mssql-tools
 
-
 # Never prompts the user for choices on installation/configuration of packages
 ENV DEBIAN_FRONTEND noninteractive
 ENV TERM linux
@@ -143,5 +142,5 @@ EXPOSE 8080 5555 8793
 
 USER airflow
 WORKDIR ${AIRFLOW_USER_HOME}
-# ENTRYPOINT ["/entrypoint.sh"]
-# CMD ["webserver"] # set default arg for entrypoint
+ENTRYPOINT ["/entrypoint.sh"]
+CMD ["webserver"] # set default arg for entrypoint
