@@ -144,9 +144,9 @@ COPY libmsodbcsql-17.4.so.1.1 /usr/local/lib/libmsodbcsql-17.4.so.1.1
 #RUN wget https://gallery.technet.microsoft.com/ODBC-Driver-13-for-Ubuntu-b87369f0/file/154097/2/installodbc.sh 
 #RUN sh installodbc.sh
 
-RUN  pip install 'apache-airflow[mssql]' \
-                 'pyodbc' \
-                 'pymssql'
+#RUN  pip install 'apache-airflow[mssql]' \
+#                 'pyodbc' \
+#                 'pymssql'
                              
 COPY script/entrypoint.sh /entrypoint.sh
 COPY config/airflow.cfg ${AIRFLOW_USER_HOME}/airflow.cfg
