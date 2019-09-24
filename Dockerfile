@@ -23,9 +23,6 @@ RUN apt-get update \
         && apt-get update \
         && ACCEPT_EULA=Y apt-get install -y msodbcsql17 mssql-tools
 
-RUN ln -s ../../../etc/odbcinst.ini /etc/odbcinst.ini
-RUN ln -s ../../../etc/odbc.ini /etc/odbc.ini
-
 # Never prompts the user for choices on installation/configuration of packages
 ENV DEBIAN_FRONTEND noninteractive
 ENV TERM linux
@@ -88,6 +85,12 @@ RUN set -ex \
         /usr/share/man \
         /usr/share/doc \
         /usr/share/doc-base
+        
+#RUN ln -s /etc/odbcinst.ini /usr/local/airflow/etc/odbcinst.ini
+#RUN ln -s /etc/odbc.ini /usr/local/airflow/etc/odbc.ini
+
+COPY /etc/odbcinst.ini /usr/local/airflow/etc/odbcinst.ini
+COPY /etc/odbc.ini /usr/local/airflow/etc/odbc.ini
 
 # ## Install ODBC driver 17
 # RUN apt-get install --reinstall build-essential -y
@@ -138,12 +141,10 @@ RUN set -ex \
 #RUN wget https://gallery.technet.microsoft.com/ODBC-Driver-13-for-Ubuntu-b87369f0/file/154097/2/installodbc.sh 
 #RUN sh installodbc.sh
 
-#RUN  pip install 'apache-airflow[mssql]' \
-#                 'pyodbc' \
-#                 'pymssql'
-
-
-                                
+RUN  pip install 'apache-airflow[mssql]' \
+                 'pyodbc' \
+                 'pymssql'
+                             
 COPY script/entrypoint.sh /entrypoint.sh
 COPY config/airflow.cfg ${AIRFLOW_USER_HOME}/airflow.cfg
 
