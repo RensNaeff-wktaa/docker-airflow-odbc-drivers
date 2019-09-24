@@ -79,11 +79,12 @@ RUN apt-get install gcc unixodbc-dev gnupg2 apt-transport-https curl -y \
 RUN apt-get update
 RUN ACCEPT_EULA=Y apt-get install msodbcsql17 -y
 RUN ACCEPT_EULA=Y apt-get install mssql-tools -y
+RUN echo 'export PATH="$PATH:/opt/mssql-tools/bin"' >> ~/.bash_profile
 RUN echo 'export PATH="$PATH:/opt/mssql-tools/bin"' >> ~/.bashrc
-RUN apt-get install unixodbc-dev -y
 RUN /bin/bash -c "source ~/.bashrc"
+RUN apt-get install unixodbc-dev -y
 
-## Install ODBC driver 13
+## Install ODBC driver 13.1
 RUN apt-get install --reinstall build-essential -y
 RUN apt-get update
 RUN apt-get install gcc unixodbc-dev gnupg2 apt-transport-https curl -y \
@@ -92,22 +93,23 @@ RUN apt-get install gcc unixodbc-dev gnupg2 apt-transport-https curl -y \
 RUN apt-get update
 RUN ACCEPT_EULA=Y apt-get install msodbcsql -y
 RUN ACCEPT_EULA=Y apt-get install mssql-tools -y
+RUN echo 'export PATH="$PATH:/opt/mssql-tools/bin"' >> ~/.bash_profile
 RUN echo 'export PATH="$PATH:/opt/mssql-tools/bin"' >> ~/.bashrc
-RUN apt-get install unixodbc-dev -y
 RUN /bin/bash -c "source ~/.bashrc"
+RUN apt-get install unixodbc-dev -y
 
 RUN  pip install 'apache-airflow[mssql]' \
                  'pyodbc' \
                  'pymssql'
 
-ADD odbcinst.ini /etc/odbcinst.ini
-RUN apt-get update
-RUN apt-get install -y tdsodbc unixodbc-dev
-RUN apt install unixodbc-bin -y
-RUN apt-get clean -y
+#ADD odbcinst.ini /etc/odbcinst.ini
+#RUN apt-get update
+#RUN apt-get install -y tdsodbc unixodbc-dev
+#RUN apt install unixodbc-bin -y
+#RUN apt-get clean -y
 
-RUN ln -sf /usr/local/airflow/etc/odbcinst.ini /etc/odbcinst.ini
-RUN ln -sf /usr/local/airflow/etc/odbc.ini /etc/odbc.ini
+#RUN ln -sf /usr/local/airflow/etc/odbcinst.ini /etc/odbcinst.ini
+#RUN ln -sf /usr/local/airflow/etc/odbc.ini /etc/odbc.ini
 
 #RUN ["ln", "-s", "/usr/local/etc/odbcinst.ini", "/etc/odbcinst.ini"]
 #RUN ["ln", "-s", "/usr/local/etc/odbc.ini", "/etc/odbc.ini"]
