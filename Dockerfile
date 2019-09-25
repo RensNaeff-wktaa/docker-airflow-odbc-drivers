@@ -88,68 +88,9 @@ RUN set -ex \
         /usr/share/doc \
         /usr/share/doc-base
         
-#RUN ln -s /etc/odbcinst.ini /usr/local/airflow/etc/odbcinst.ini
-#RUN ln -s /etc/odbc.ini /usr/local/airflow/etc/odbc.ini
-
-#COPY /etc/odbcinst.ini /usr/local/airflow/etc/odbcinst.ini
-#COPY /etc/odbc.ini /usr/local/airflow/etc/odbc.ini
-
 COPY libmsodbcsql-13.1.so.9.2 /usr/local/lib/libmsodbcsql-13.1.so.9.2
 COPY libmsodbcsql-17.4.so.1.1 /usr/local/lib/libmsodbcsql-17.4.so.1.1
-
-# ## Install ODBC driver 17
-# RUN apt-get install --reinstall build-essential -y
-# RUN apt-get update
-# RUN apt-get install gcc unixodbc-dev gnupg2 apt-transport-https curl -y \
-#   && curl https://packages.microsoft.com/keys/microsoft.asc | apt-key add - \
-#   && curl https://packages.microsoft.com/config/debian/9/prod.list > /etc/apt/sources.list.d/mssql-release.list 
-# RUN apt-get update
-# RUN ACCEPT_EULA=Y apt-get install msodbcsql17 -y
-# RUN ACCEPT_EULA=Y apt-get install mssql-tools -y
-# RUN echo 'export PATH="$PATH:/opt/mssql-tools/bin"' >> ~/.bash_profile
-# RUN echo 'export PATH="$PATH:/opt/mssql-tools/bin"' >> ~/.bashrc
-# RUN /bin/bash -c "source ~/.bashrc"
-# RUN apt-get install unixodbc-dev -y
-
-# ## Install ODBC driver 13.1
-# RUN apt-get install --reinstall build-essential -y
-# RUN apt-get update
-# RUN apt-get install gcc unixodbc-dev gnupg2 apt-transport-https curl -y \
-#   && curl https://packages.microsoft.com/keys/microsoft.asc | apt-key add - \
-#   && curl https://packages.microsoft.com/config/debian/8/prod.list > /etc/apt/sources.list.d/mssql-release.list
-# RUN apt-get update
-# RUN ACCEPT_EULA=Y apt-get install msodbcsql -y
-# RUN ACCEPT_EULA=Y apt-get install mssql-tools -y
-# RUN echo 'export PATH="$PATH:/opt/mssql-tools/bin"' >> ~/.bash_profile
-# RUN echo 'export PATH="$PATH:/opt/mssql-tools/bin"' >> ~/.bashrc
-# RUN /bin/bash -c "source ~/.bashrc"
-# RUN apt-get install unixodbc-dev -y
-
-# RUN  pip install 'apache-airflow[mssql]' \
-#                  'pyodbc' \
-#                  'pymssql'
-
-# ADD odbcinst.ini ../../etc/odbcinst.ini
-# RUN apt-get update
-# RUN apt install unixodbc-bin -y
-# RUN apt-get clean -y
-
-#RUN ln -sf /usr/local/airflow/etc/odbcinst.ini /etc/odbcinst.ini
-#RUN ln -sf /usr/local/airflow/etc/odbc.ini /etc/odbc.ini
-
-#RUN ["ln", "-s", "/usr/local/etc/odbcinst.ini", "/etc/odbcinst.ini"]
-#RUN ["ln", "-s", "/usr/local/etc/odbc.ini", "/etc/odbc.ini"]
-              
-#RUN apt search wget
-#RUN apt-get install wget -y
-#RUN su
-#RUN wget https://gallery.technet.microsoft.com/ODBC-Driver-13-for-Ubuntu-b87369f0/file/154097/2/installodbc.sh 
-#RUN sh installodbc.sh
-
-#RUN  pip install 'apache-airflow[mssql]' \
-#                 'pyodbc' \
-#                 'pymssql'
-                             
+                          
 COPY script/entrypoint.sh /entrypoint.sh
 COPY config/airflow.cfg ${AIRFLOW_USER_HOME}/airflow.cfg
 
