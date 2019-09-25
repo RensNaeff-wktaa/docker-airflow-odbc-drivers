@@ -88,8 +88,8 @@ RUN set -ex \
         /usr/share/doc \
         /usr/share/doc-base
         
-COPY libmsodbcsql-13.1.so.9.2 /usr/local/lib/libmsodbcsql-13.1.so.9.2
-COPY libmsodbcsql-17.4.so.1.1 /usr/local/lib/libmsodbcsql-17.4.so.1.1
+#COPY libmsodbcsql-13.1.so.9.2 /usr/local/lib/libmsodbcsql-13.1.so.9.2
+#COPY libmsodbcsql-17.4.so.1.1 /usr/local/lib/libmsodbcsql-17.4.so.1.1
                           
 COPY script/entrypoint.sh /entrypoint.sh
 COPY config/airflow.cfg ${AIRFLOW_USER_HOME}/airflow.cfg
