@@ -8,12 +8,12 @@ FROM python:3.7-slim-stretch
 LABEL maintainer="Puckel_"
 
 ## Install ODBC-driver 13
-RUN apt-get update \
-        && apt-get install -y curl apt-transport-https gnupg2 \
-        && curl https://packages.microsoft.com/keys/microsoft.asc | apt-key add - \
-        && curl https://packages.microsoft.com/config/debian/9/prod.list > /etc/apt/sources.list.d/mssql-release.list \
-        && apt-get update \
-        && ACCEPT_EULA=Y apt-get install -y msodbcsql mssql-tools
+# RUN apt-get update \
+#         && apt-get install -y curl apt-transport-https gnupg2 \
+#         && curl https://packages.microsoft.com/keys/microsoft.asc | apt-key add - \
+#         && curl https://packages.microsoft.com/config/debian/8/prod.list > /etc/apt/sources.list.d/mssql-release.list \
+#         && apt-get update \
+#         && ACCEPT_EULA=Y apt-get install -y msodbcsql mssql-tools
 
 # Install ODBC-driver 17
 RUN apt-get update \
