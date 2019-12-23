@@ -16,8 +16,7 @@ RUN apt-get update \
         && ACCEPT_EULA=Y apt-get install -y msodbcsql17 mssql-tools \
         && apt-get install unixodbc-dev -y \
         #&& echo 'export PATH="$PATH:/opt/mssql-tools/bin"' >> ~/.bash_profile
-        && echo 'export PATH="$PATH:/opt/mssql-tools/bin"' >> ~/.bashrc \
-        && source ~/.bashrc
+        && ln -s /opt/mssql-tools/bin/* /usr/local/bin/
         
 
 # Never prompts the user for choices on installation/configuration of packages
