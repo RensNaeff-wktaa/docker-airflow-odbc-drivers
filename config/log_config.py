@@ -58,7 +58,7 @@ PROCESSOR_FILENAME_TEMPLATE = conf.get('core', 'LOG_PROCESSOR_FILENAME_TEMPLATE'
 
 FORMATTER_CLASS_KEY = '()' if six.PY2 else 'class'
 
-DEFAULT_LOGGING_CONFIG = {
+LOGGING_CONFIG = {
     'version': 1,
     'disable_existing_loggers': False,
     'formatters': {
@@ -163,7 +163,8 @@ if REMOTE_LOGGING:
     # GCS buckets should start with "gs://"
     # WASB buckets should start with "wasb"
     # just to help Airflow select correct handler
-    REMOTE_BASE_LOG_FOLDER = conf.get('core', 'REMOTE_BASE_LOG_FOLDER')
+    #REMOTE_BASE_LOG_FOLDER = conf.get('core', 'REMOTE_BASE_LOG_FOLDER')
+    REMOTE_BASE_LOG_FOLDER = 'wasb-airflow/logs'
 
     if REMOTE_BASE_LOG_FOLDER.startswith('s3://'):
         S3_REMOTE_HANDLERS = {
@@ -202,6 +203,7 @@ if REMOTE_LOGGING:
             },
         }
 
+        #DEFAULT_LOGGING_CONFIG['handlers'].update(WASB_REMOTE_HANDLERS)
         DEFAULT_LOGGING_CONFIG['handlers'].update(WASB_REMOTE_HANDLERS)
     elif ELASTICSEARCH_HOST:
         ELASTICSEARCH_LOG_ID_TEMPLATE = conf.get('elasticsearch', 'LOG_ID_TEMPLATE')
