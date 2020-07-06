@@ -85,8 +85,8 @@ RUN set -ex \
                           
 COPY script/entrypoint.sh /entrypoint.sh
 COPY config/airflow.cfg ${AIRFLOW_USER_HOME}/airflow.cfg
-COPY config/log_config.py ${AIRFLOW_USER_HOME}/log_config.py
-COPY config/__init__.py ${AIRFLOW_USER_HOME}/__init__.py
+COPY config/log_config.py ${AIRFLOW_USER_HOME}/config/log_config.py
+COPY config/__init__.py ${AIRFLOW_USER_HOME}/config/__init__.py
 
 RUN chown -R airflow: ${AIRFLOW_USER_HOME}
 
