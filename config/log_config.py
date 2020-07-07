@@ -24,7 +24,8 @@ import six
 
 from airflow import AirflowException
 #from airflow.configuration import conf
-from airflow.configuration import config as conf
+#from airflow.configuration import config as conf
+from airflow import configuration as conf
 from airflow.utils.file import mkdirs
 
 # TODO: Logging format and level should be configured
