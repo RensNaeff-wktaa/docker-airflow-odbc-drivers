@@ -166,7 +166,7 @@ if REMOTE_LOGGING:
     # WASB buckets should start with "wasb"
     # just to help Airflow select correct handler
     #REMOTE_BASE_LOG_FOLDER = conf.get('core', 'REMOTE_BASE_LOG_FOLDER')
-    REMOTE_BASE_LOG_FOLDER = 'wasb-airflow/logs'
+    REMOTE_BASE_LOG_FOLDER = 'wasb-airflow'
 
     if REMOTE_BASE_LOG_FOLDER.startswith('s3://'):
         S3_REMOTE_HANDLERS = {
