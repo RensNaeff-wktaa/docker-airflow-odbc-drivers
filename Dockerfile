@@ -69,7 +69,7 @@ RUN set -ex \
     && pip install ndg-httpsclient \
     && pip install pyasn1 \
     && pip install pyodbc \
-    && pip install SQLAlchemy \
+    && pip install SQLAlchemy==1.3.15 \
     && pip install apache-airflow[crypto,celery,postgres,hive,jdbc,mysql,mssql,kubernetes,jdbcssh${AIRFLOW_DEPS:+,}${AIRFLOW_DEPS}]==${AIRFLOW_VERSION} \
     && pip install 'redis==3.2' \
     && if [ -n "${PYTHON_DEPS}" ]; then pip install ${PYTHON_DEPS}; fi \
