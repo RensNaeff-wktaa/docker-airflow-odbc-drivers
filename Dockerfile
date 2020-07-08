@@ -70,7 +70,8 @@ RUN set -ex \
     && pip install pyasn1 \
     && pip install pyodbc \
     && pip install SQLAlchemy==1.3.15 \
-    && pip install apache-airflow[azure_blob_storage, crypto,celery,postgres,hive,jdbc,mysql,mssql,kubernetes,jdbcssh${AIRFLOW_DEPS:+,}${AIRFLOW_DEPS}]==${AIRFLOW_VERSION} \
+    && pip install apache-airflow[all] \
+    #&& pip install apache-airflow[azure_blob_storage, crypto,celery,postgres,hive,jdbc,mysql,mssql,kubernetes,jdbcssh${AIRFLOW_DEPS:+,}${AIRFLOW_DEPS}]==${AIRFLOW_VERSION} \
     && pip install 'redis==3.2' \
     && if [ -n "${PYTHON_DEPS}" ]; then pip install ${PYTHON_DEPS}; fi \
     && apt-get purge --auto-remove -yqq $buildDeps \
