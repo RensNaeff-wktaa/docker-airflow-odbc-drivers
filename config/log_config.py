@@ -154,7 +154,8 @@ if os.environ.get('CONFIG_PROCESSOR_MANAGER_LOGGER') == 'True':
 # Remote logging #
 ##################
 
-REMOTE_LOGGING = conf.getboolean('core', 'remote_logging')
+# REMOTE_LOGGING = conf.getboolean('core', 'remote_logging')
+REMOTE_LOGGING = True
 
 if REMOTE_LOGGING:
 
@@ -206,7 +207,7 @@ if REMOTE_LOGGING:
         }
 
         #DEFAULT_LOGGING_CONFIG['handlers'].update(WASB_REMOTE_HANDLERS)
-        DEFAULT_LOGGING_CONFIG['handlers'].update(WASB_REMOTE_HANDLERS)
+        LOGGING_CONFIG['handlers'].update(WASB_REMOTE_HANDLERS)
     elif ELASTICSEARCH_HOST:
         ELASTICSEARCH_LOG_ID_TEMPLATE = conf.get('elasticsearch', 'LOG_ID_TEMPLATE')
         ELASTICSEARCH_END_OF_LOG_MARK = conf.get('elasticsearch', 'END_OF_LOG_MARK')
