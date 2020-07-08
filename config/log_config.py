@@ -23,8 +23,6 @@ from typing import Dict, Any
 import six
 
 from airflow import AirflowException
-#from airflow.configuration import conf
-#from airflow.configuration import config as conf
 from airflow import configuration as conf
 from airflow.utils.file import mkdirs
 
@@ -138,9 +136,9 @@ DEFAULT_DAG_PARSING_LOGGING_CONFIG = {
 # This is to avoid exceptions when initializing RotatingFileHandler multiple times
 # in multiple processes.
 if os.environ.get('CONFIG_PROCESSOR_MANAGER_LOGGER') == 'True':
-    DEFAULT_LOGGING_CONFIG['handlers'] \
+    LOGGING_CONFIG['handlers'] \
         .update(DEFAULT_DAG_PARSING_LOGGING_CONFIG['handlers'])
-    DEFAULT_LOGGING_CONFIG['loggers'] \
+    LOGGING_CONFIG['loggers'] \
         .update(DEFAULT_DAG_PARSING_LOGGING_CONFIG['loggers'])
 
     # Manually create log directory for processor_manager handler as RotatingFileHandler
@@ -169,31 +167,7 @@ if REMOTE_LOGGING:
     #REMOTE_BASE_LOG_FOLDER = conf.get('core', 'REMOTE_BASE_LOG_FOLDER')
     REMOTE_BASE_LOG_FOLDER = 'wasb-airflow'
 
-    if REMOTE_BASE_LOG_FOLDER.startswith('s3://'):
-        S3_REMOTE_HANDLERS = {
-            'task': {
-                'class': 'airflow.utils.log.s3_task_handler.S3TaskHandler',
-                'formatter': 'airflow',
-                'base_log_folder': os.path.expanduser(BASE_LOG_FOLDER),
-                's3_log_folder': REMOTE_BASE_LOG_FOLDER,
-                'filename_template': FILENAME_TEMPLATE,
-            },
-        }
-
-        DEFAULT_LOGGING_CONFIG['handlers'].update(S3_REMOTE_HANDLERS)
-    elif REMOTE_BASE_LOG_FOLDER.startswith('gs://'):
-        GCS_REMOTE_HANDLERS = {
-            'task': {
-                'class': 'airflow.utils.log.gcs_task_handler.GCSTaskHandler',
-                'formatter': 'airflow',
-                'base_log_folder': os.path.expanduser(BASE_LOG_FOLDER),
-                'gcs_log_folder': REMOTE_BASE_LOG_FOLDER,
-                'filename_template': FILENAME_TEMPLATE,
-            },
-        }
-
-        DEFAULT_LOGGING_CONFIG['handlers'].update(GCS_REMOTE_HANDLERS)
-    elif REMOTE_BASE_LOG_FOLDER.startswith('wasb'):
+    if REMOTE_BASE_LOG_FOLDER.startswith('wasb'):
         WASB_REMOTE_HANDLERS = {
             'task': {
                 'class': 'airflow.utils.log.wasb_task_handler.WasbTaskHandler',
@@ -205,32 +179,7 @@ if REMOTE_LOGGING:
                 'delete_local_copy': False,
             },
         }
-
-        #DEFAULT_LOGGING_CONFIG['handlers'].update(WASB_REMOTE_HANDLERS)
         LOGGING_CONFIG['handlers'].update(WASB_REMOTE_HANDLERS)
-    elif ELASTICSEARCH_HOST:
-        ELASTICSEARCH_LOG_ID_TEMPLATE = conf.get('elasticsearch', 'LOG_ID_TEMPLATE')
-        ELASTICSEARCH_END_OF_LOG_MARK = conf.get('elasticsearch', 'END_OF_LOG_MARK')
-        ELASTICSEARCH_WRITE_STDOUT = conf.getboolean('elasticsearch', 'WRITE_STDOUT')
-        ELASTICSEARCH_JSON_FORMAT = conf.getboolean('elasticsearch', 'JSON_FORMAT')
-        ELASTICSEARCH_JSON_FIELDS = conf.get('elasticsearch', 'JSON_FIELDS')
-
-        ELASTIC_REMOTE_HANDLERS = {
-            'task': {
-                'class': 'airflow.utils.log.es_task_handler.ElasticsearchTaskHandler',
-                'formatter': 'airflow',
-                'base_log_folder': os.path.expanduser(BASE_LOG_FOLDER),
-                'log_id_template': ELASTICSEARCH_LOG_ID_TEMPLATE,
-                'filename_template': FILENAME_TEMPLATE,
-                'end_of_log_mark': ELASTICSEARCH_END_OF_LOG_MARK,
-                'host': ELASTICSEARCH_HOST,
-                'write_stdout': ELASTICSEARCH_WRITE_STDOUT,
-                'json_format': ELASTICSEARCH_JSON_FORMAT,
-                'json_fields': ELASTICSEARCH_JSON_FIELDS
-            },
-        }
-
-        DEFAULT_LOGGING_CONFIG['handlers'].update(ELASTIC_REMOTE_HANDLERS)
     else:
         raise AirflowException(
             "Incorrect remote log configuration. Please check the configuration of option 'host' in "
