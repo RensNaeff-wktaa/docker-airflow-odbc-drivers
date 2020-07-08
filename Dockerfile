@@ -87,6 +87,7 @@ RUN set -ex \
                           
 COPY script/entrypoint.sh /entrypoint.sh
 #COPY config/airflow.cfg ${AIRFLOW_USER_HOME}/airflow.cfg
+COPY dags/tuto.py ${AIRFLOW_USER_HOME}/dags/tuto.py
 COPY config/airflow.cfg /usr/local/lib/python3.7/site-packages/airflow/airflow.cfg
 COPY config/log_config.py /usr/local/lib/python3.7/site-packages/airflow/config/log_config.py
 COPY config/__init__.py /usr/local/lib/python3.7/site-packages/airflow/config/__init__.py
